@@ -12,7 +12,23 @@ function buildTable(data) {
         Object.values(element).forEach(val => {
             let cell=row.append("td");
             cell.text(val);
-            
+
         });
     });
-}
+};
+
+// function to react to a click, used for filtering the table
+function handleClick() {
+    let date =d3.select("#datetime").property("value");
+    let filteredData = tableData;
+    if (date) {
+        filteredData = filteredData.filter(row => row.datetime === date);
+    };
+    buildTable(filteredData);
+};
+
+// event to listen for button click
+d3.selectAll("#filter-btn").on("click", handleClick);
+
+// build table when the page loads
+buildTable(tableData);
